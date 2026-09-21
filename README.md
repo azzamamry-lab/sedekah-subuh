@@ -1,17 +1,29 @@
 # Landing Page Sedekah Subuh — Laravel
 
-Landing page donasi **Sedekah Subuh** untuk Yayasan Nur Mirah, dibangun dengan Laravel 13.
+Landing page donasi **Sedekah Subuh**, dibangun dengan Laravel 13 + PHP 8.4.
+
+## 🌐 Link Live
+
+**https://chest-fill-stress-properties.trycloudflare.com**
+
+(buka dari HP atau komputer mana saja, selama laptop menyala dan script-nya jalan)
+
+Link ini berubah setiap kali dinyalakan ulang. Untuk menyalakan lagi, jalankan `jalankan-publik.bat`.
 
 ## Cara Menjalankan
 
-**Cara paling mudah (Windows):** double-click `jalankan.bat`
+| File | Kegunaan |
+|---|---|
+| `jalankan.bat` | Nyalakan server lokal (http://127.0.0.1:8000) |
+| `jalankan-publik.bat` | Nyalakan server + **link publik** yang bisa dibuka dari mana saja |
+
+**Cara paling mudah:** klik 2x `jalankan-publik.bat`, tunggu ~20 detik, lalu cari baris berisi `https://xxxxx.trycloudflare.com`.
 
 **Atau lewat terminal:**
 ```bash
 cd sedekah-subuh
 php artisan serve
 ```
-Lalu buka http://127.0.0.1:8000
 
 ## Halaman
 
@@ -36,7 +48,11 @@ sedekah-subuh/
 │   ├── tentang.blade.php
 │   ├── laporan.blade.php
 │   └── donasi.blade.php
-└── jalankan.bat                                 ← shortcut jalankan server
+├── Dockerfile                                   ← untuk deploy (Render/Fly.io)
+├── render.yaml                                  ← blueprint deploy Render
+├── netlify.toml                                 ← (tidak dipakai, Netlify tidak bisa PHP)
+├── jalankan.bat                                 ← nyalakan server lokal
+└── jalankan-publik.bat                          ← nyalakan + link publik
 ```
 
 ## Mengubah Isi Halaman
@@ -72,9 +88,28 @@ Bagian berikut sengaja dibiarkan kosong (belum ada data asli):
 - **Nomor kontak** di halaman Tentang dan footer
 - **Link sosial media** (Instagram, YouTube, Facebook) di footer
 - **Laporan penyaluran** di halaman `/laporan`
+- **Nama yayasan** — sekarang masih placeholder "Yayasan Nur Mirah"
 
 Semua ditandai dengan teks "belum dicantumkan" supaya jelas mana yang masih perlu dilengkapi,
 tidak dikarang-karang.
+
+## Deploy Permanen (Kalau Mau)
+
+Kode sudah siap deploy. Pilih salah satu:
+
+### Render.com (paling mudah)
+1. Push repo ke GitHub (sudah: `github.com/azzamamry-lab/sedekah-subuh`)
+2. Login https://dashboard.render.com → **New +** → **Blueprint**
+3. Pilih repo `sedekah-subuh` → **Apply**
+4. `render.yaml` otomatis mengatur semuanya, build ~5-8 menit
+
+### Fly.io
+```bash
+fly launch --dockerfile Dockerfile
+```
+
+Link Render/Fly bersifat **permanen** (tidak berubah tiap nyala).
+Link Cloudflare Tunnel bersifat **sementara** (berubah tiap nyala, hanya hidup saat laptop nyala).
 
 ## Requirement
 

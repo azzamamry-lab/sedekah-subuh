@@ -1,0 +1,32 @@
+# Konfigurasi Netlify untuk Laravel Sedekah Subuh
+[build]
+  command = "php -r \"copy('.env.example','.env');\" && php artisan key:generate --force"
+  publish = "public"
+
+[build.environment]
+  PHP_VERSION = "8.4"
+  APP_ENV = "production"
+  APP_DEBUG = "false"
+  LOG_CHANNEL = "stderr"
+  DB_CONNECTION = "sqlite"
+  DB_DATABASE = "/tmp/database.sqlite"
+  SESSION_DRIVER = "file"
+  CACHE_STORE = "file"
+  QUEUE_CONNECTION = "sync"
+
+# Plugin PHP untuk Netlify
+[[plugins]]
+  package = "netlify-plugin-php"
+
+# Rewrite semua request ke index.php (front controller Laravel)
+[[redirects]]
+  from = "/*"
+  to = "/index.php"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
